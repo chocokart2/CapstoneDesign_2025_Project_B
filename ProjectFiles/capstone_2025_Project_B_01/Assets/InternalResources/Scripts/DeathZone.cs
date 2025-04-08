@@ -13,7 +13,7 @@ public class DeathZone : MonoBehaviour
         IEnumerator m_coroutine()
         {
             PlayerController.instance.HideImage();
-            Scroll.instance.ChangeHoldingState(false);
+            PlayerController.instance.KillPlayer();
             yield return new WaitForSeconds(5f);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }

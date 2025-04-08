@@ -46,12 +46,11 @@ public class Scroll : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, -angle * Mathf.Rad2Deg);
         }
 
-        Debug.Log($">> πÎ∑±Ω∫ : {player.ScrollBalance}");
+        //Debug.Log($">> πÎ∑±Ω∫ : {player.ScrollBalance}");
     }
 
     public void ChangeHoldingState(bool isOnHead)
     {
-        Debug.Log($">> ≥ı√∆Ω¿¥œ¥Ÿ");
 
         // ∏Æ¡ˆµÂπŸµ
         rigidBody.useGravity = !isOnHead;
@@ -61,6 +60,8 @@ public class Scroll : MonoBehaviour
         }
         else
         {
+            Debug.Log($">> ≥ı√∆Ω¿¥œ¥Ÿ");
+
             rigidBody.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
             rigidBody.linearVelocity = Vector3.zero;
             rigidBody.AddForce(Vector3.up * dropUpForce + (transform.position - PlayerController.instance.transform.position).normalized * dropSideForce, ForceMode.VelocityChange);

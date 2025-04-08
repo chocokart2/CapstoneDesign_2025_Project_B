@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public bool IsClimbing = false;
     public bool IsHoldingScroll { get => isHoldingScroll; }
     bool isHoldingScroll = true;
+    bool isDead = false;
     float speed = 3.0f;
     [SerializeField] float jumpForce = 20.0f;
     [SerializeField] float climbForce = 5.0f;
@@ -58,6 +59,23 @@ public class PlayerController : MonoBehaviour
     {
         IsClimbing = value;
         rigidBody.useGravity = !value;
+    }
+
+    public void DropScroll()
+    {
+        isHoldingScroll = false;
+        scrollBalance = 0;
+        scroll.ChangeHoldingState(false);
+        foreach (Coroutine one in windCoroutines)
+        {
+            StopCoroutine(one);
+        }
+    }
+
+    public void KillPlayer()
+    {
+        DropScroll();
+        isDead = true;
     }
 
     private void Awake()
@@ -152,23 +170,19 @@ public class PlayerController : MonoBehaviour
         float delta = staticAmplyfyBalance * Time.deltaTime * scrollBalance;
         scrollBalance += delta;
 
-        Debug.Log($"변화량 : {delta} \n결과 : {scrollBalance}");
+        // Debug.Log($"변화량 : {delta} \n결과 : {scrollBalance}");
         Warning.SetActive(Mathf.Abs(scrollBalance) > 0.5f && Mathf.Abs(scrollBalance) < 1f);
         // 만약 너무 벗어나면 아웃
         if (scrollBalance > 1 || scrollBalance < -1)
         {
-            isHoldingScroll = false;
-            scrollBalance = 0;
-            scroll.ChangeHoldingState(false);
-            foreach (Coroutine one in windCoroutines)
-            {
-                StopCoroutine(one);
-            }
+            DropScroll();
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (isDead) return;
+
         if (collision.gameObject.name == "ScrollHitBox" && (isHoldingScroll == false))
         {
             isHoldingScroll = true;
