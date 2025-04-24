@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     float nextJumpTime;
     [SerializeField] float moveBalanceDefault = 0.1f;
     [SerializeField] float moveBalanceBonus = 0.05f;
+    [SerializeField] float scrollSpeed = 1.3f;
     float staticAmplyfyBalance = 0.2f;
     public float ScrollBalance { get => scrollBalance; }
     float scrollBalance = 0.0f;
@@ -155,7 +156,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             scrollBalance *= (scrollBalance > 0) ? (1.0f + moveBalanceBonus) * (1.0f + Time.deltaTime) : (1.0f - moveBalanceBonus) * (1.0f - Time.deltaTime);
-            scrollBalance += moveBalanceDefault * Time.deltaTime;
+            scrollBalance += moveBalanceDefault * Time.deltaTime * scrollSpeed;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -167,7 +168,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdateBalance()
     {
-        float delta = staticAmplyfyBalance * Time.deltaTime * scrollBalance;
+        float delta = staticAmplyfyBalance * Time.deltaTime * scrollBalance * scrollSpeed;
         scrollBalance += delta;
 
         // Debug.Log($"변화량 : {delta} \n결과 : {scrollBalance}");
