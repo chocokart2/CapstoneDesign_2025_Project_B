@@ -5,6 +5,7 @@ public class UiManager : MonoBehaviour
     static public UiManager instance;
 
     [SerializeField] GameObject winText;
+    [SerializeField] GameObject pauseImage;
 
     public void ShowWin()
     {
