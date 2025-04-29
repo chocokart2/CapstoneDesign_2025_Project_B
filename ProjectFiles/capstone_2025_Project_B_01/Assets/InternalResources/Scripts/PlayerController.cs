@@ -97,6 +97,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UiManager.instance.HasPaused()) return;
+
         Move();
         Jump();
         Climb();
