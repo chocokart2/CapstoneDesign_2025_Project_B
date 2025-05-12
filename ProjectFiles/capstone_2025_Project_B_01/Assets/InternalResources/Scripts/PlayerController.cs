@@ -9,23 +9,27 @@ public class PlayerController : MonoBehaviour
 
     public bool IsClimbing = false;
     public bool IsHoldingScroll { get => isHoldingScroll; }
-    bool isHoldingScroll = true;
-    bool isDead = false;
-    float speed = 3.0f;
     [SerializeField] float jumpForce = 20.0f;
     [SerializeField] float climbForce = 5.0f;
-    float jumpTerm = 0.5f;
-    float nextJumpTime;
     [SerializeField] float moveBalanceDefault = 0.1f;
     [SerializeField] float moveBalanceBonus = 0.05f;
     [SerializeField] float scrollSpeed = 1.3f;
+    bool isHoldingScroll = true;
+    bool isDead = false;
+    bool isLookingLeft = false;
+    float speed = 3.0f;
+    float jumpTerm = 0.5f;
+    float nextJumpTime;
     float staticAmplyfyBalance = 0.2f;
     public float ScrollBalance { get => scrollBalance; }
     float scrollBalance = 0.0f;
+    string animatorParameterNameIsLookingLeft = "IsLookingLeft";
     List<Coroutine> windCoroutines = new List<Coroutine>();
 
     // gameObject Component
     Rigidbody rigidBody;
+    Animator animator;
+    SpriteRenderer spriteRenderer;
 
     // related Gameobject
     public Scroll scroll;
@@ -92,6 +96,8 @@ public class PlayerController : MonoBehaviour
 
         warningRenderer = Warning.GetComponent<MeshRenderer>();
         quadRenderer = quad.GetComponent<MeshRenderer>();
+
+        animator = transform.GetChild(0).GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -112,6 +118,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A)) direction += Vector3.left;
         if (Input.GetKey(KeyCode.D)) direction += Vector3.right;
+        if (direction.x > float.Epsilon) animator.SetBool(animatorParameterNameIsLookingLeft, true);
+        if (direction.x < float.Epsilon) animator.SetBool(animatorParameterNameIsLookingLeft, false);
+
 
         transform.Translate(direction * speed * Time.deltaTime);
     }
@@ -126,6 +135,9 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+
+
+
         RaycastHit hit;
         Vector3 start = transform.position - new Vector3(0, 0.3f, 0);
         if (Physics.Raycast(start, Vector3.down, out hit, 0.4f) == false)
