@@ -3252,6 +3252,18 @@ PrefabInstance:
       propertyPath: scrollSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5184911946126242163, guid: 764f10baca5b45243bb972d8bba33aae, type: 3}
+      propertyPath: lengthInSec
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184911946126242163, guid: 764f10baca5b45243bb972d8bba33aae, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184911946126242163, guid: 764f10baca5b45243bb972d8bba33aae, type: 3}
+      propertyPath: EmissionModule.rateOverTime.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5414913011408027475, guid: 764f10baca5b45243bb972d8bba33aae, type: 3}
       propertyPath: m_FlipX
       value: 0

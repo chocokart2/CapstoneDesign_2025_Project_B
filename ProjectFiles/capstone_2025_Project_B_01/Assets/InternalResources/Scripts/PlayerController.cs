@@ -17,14 +17,18 @@ public class PlayerController : MonoBehaviour
     bool isHoldingScroll = true;
     bool isDead = false;
     bool isLookingLeft = false;
+    bool isCurrentGround = false;
     float speed = 3.0f;
     float jumpTerm = 0.5f;
     float nextJumpTime;
     float staticAmplyfyBalance = 0.2f;
     public float ScrollBalance { get => scrollBalance; }
     float scrollBalance = 0.0f;
-    string animatorParameterNameIsLookingLeft = "IsLookingLeft";
+    string animatorParameterNameOnGround = "OnGround";
+    string animatorParameterNameIsMoving = "IsMoving";
+    string animatorParameterNamePressJump = "PressJump";
     List<Coroutine> windCoroutines = new List<Coroutine>();
+    ParticleSystem.MinMaxCurve emissionPrevRate;
 
     // gameObject Component
     Rigidbody rigidBody;
@@ -35,8 +39,13 @@ public class PlayerController : MonoBehaviour
     public Scroll scroll;
     public GameObject Warning;
     public GameObject quad;
+    public GameObject particles;
     private MeshRenderer warningRenderer;
     private MeshRenderer quadRenderer;
+
+    // related Gameobject Component
+    ParticleSystem childParticleSystem;
+    ParticleSystem.EmissionModule emission;
 
     public static bool IsPlayer(Collider other) => other.gameObject.name == "Player";
 
@@ -57,7 +66,8 @@ public class PlayerController : MonoBehaviour
     public void HideImage()
     {
         warningRenderer.enabled = false;
-        quadRenderer.enabled = false;
+        //quadRenderer.enabled = false;
+        spriteRenderer.enabled = false;
     }
 
     public void SetClimbing(bool value)
@@ -97,7 +107,12 @@ public class PlayerController : MonoBehaviour
         warningRenderer = Warning.GetComponent<MeshRenderer>();
         quadRenderer = quad.GetComponent<MeshRenderer>();
 
+        spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         animator = transform.GetChild(0).GetComponent<Animator>();
+
+        childParticleSystem = particles.GetComponent<ParticleSystem>();
+        emission = childParticleSystem.emission;
+        emissionPrevRate = emission.rateOverTime;
     }
 
     // Update is called once per frame
@@ -105,11 +120,21 @@ public class PlayerController : MonoBehaviour
     {
         if (UiManager.instance.HasPaused()) return;
 
+        UpdateGroundState();
         Move();
         Jump();
         Climb();
         BalanceScroll();
         UpdateBalance();
+    }
+
+    void UpdateGroundState()
+    {
+        RaycastHit hit;
+        Vector3 start = transform.position - new Vector3(0, 0.3f, 0);
+        isCurrentGround = Physics.Raycast(start, Vector3.down, out hit, 0.4f);
+
+        animator.SetBool(animatorParameterNameOnGround, isCurrentGround);
     }
 
     void Move()
@@ -118,11 +143,20 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A)) direction += Vector3.left;
         if (Input.GetKey(KeyCode.D)) direction += Vector3.right;
-        if (direction.x > float.Epsilon) animator.SetBool(animatorParameterNameIsLookingLeft, true);
-        if (direction.x < float.Epsilon) animator.SetBool(animatorParameterNameIsLookingLeft, false);
+        
+        if (direction.x > 0.1f) spriteRenderer.flipX = false;
+        if (direction.x < -0.1f) spriteRenderer.flipX = true;
 
+        animator.SetBool(animatorParameterNameIsMoving, Mathf.Abs(direction.x) > 0.1f);
 
         transform.Translate(direction * speed * Time.deltaTime);
+        
+        if ((isCurrentGround == false) || Mathf.Abs(direction.x) < 0.1f)
+        {
+            emission.rateOverTime = 0f;
+            return;
+        }
+        emission.rateOverTime = emissionPrevRate;
     }
 
     void Jump()
@@ -135,18 +169,14 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-
-
-
-        RaycastHit hit;
-        Vector3 start = transform.position - new Vector3(0, 0.3f, 0);
-        if (Physics.Raycast(start, Vector3.down, out hit, 0.4f) == false)
+        if (isCurrentGround == false)
         {
             return;
         }
 
         rigidBody.AddForce(new Vector3(0, jumpForce, 0), ForceMode.VelocityChange);
         nextJumpTime = Time.time + jumpTerm;
+        animator.SetTrigger(animatorParameterNamePressJump);
     }
 
     void Climb()

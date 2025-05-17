@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinishZone : MonoBehaviour
 {
@@ -7,5 +9,13 @@ public class FinishZone : MonoBehaviour
         if (PlayerController.IsPlayer(other) == false) return;
 
         UiManager.instance.ShowWin();
+
+        IEnumerator Coroutine()
+        {
+            yield return new WaitForSeconds(1);
+            SceneManager.LoadScene("GeunohTest2");
+        }
+
+        StartCoroutine(Coroutine());
     }
 }
