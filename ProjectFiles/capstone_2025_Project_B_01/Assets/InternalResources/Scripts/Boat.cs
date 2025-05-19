@@ -5,7 +5,7 @@ public class Boat : MonoBehaviour
 {
     public Transform start;
     public Transform end;
-    float term = 3.0f;
+    float term = 10.0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
