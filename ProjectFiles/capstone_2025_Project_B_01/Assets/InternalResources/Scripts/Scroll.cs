@@ -1,20 +1,30 @@
+using System.Collections;
 using UnityEngine;
 
 public class Scroll : MonoBehaviour
 {
     static public Scroll instance;
+    static public bool CanPick => Time.time > instance.restrictPickEndTime;
 
     [SerializeField] float angleDivide = 4.0f;
     [SerializeField] float dropUpForce = 3f;
     [SerializeField] float dropSideForce = 1f;
+    [SerializeField] float particleTime;
+    [SerializeField] float restrictPickTime;
+    float particleEndTime = 0f;
+    float restrictPickEndTime = 0f;
+
+    ParticleSystem.MinMaxCurve emissionPrevRate;
     // this gameobject component
 
     Rigidbody rigidBody;
 
     // other gameobject;
-
+    [SerializeField] ParticleSystem particle;
+    [SerializeField] GameObject quad;
     Transform playerPosition;
     PlayerController player;
+    ParticleSystem.EmissionModule emission;
 
     private void Awake()
     {
@@ -26,6 +36,10 @@ public class Scroll : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         rigidBody.useGravity = false;
+
+        emission = particle.emission;
+        emissionPrevRate = emission.rateOverTime;
+        emission.rateOverTime = 0f;
 
         player = PlayerController.instance;
         playerPosition = player.transform;
@@ -44,6 +58,23 @@ public class Scroll : MonoBehaviour
 
             transform.position = playerPosition.position + new Vector3(posX, posY, 0);
             transform.eulerAngles = new Vector3(0, 0, -angle * Mathf.Rad2Deg);
+        }
+        if (Time.time < particleEndTime)
+        {
+            emission.rateOverTime = emissionPrevRate;
+        }
+        else
+        {
+            emission.rateOverTime = 0.0f;
+        }
+
+        if (CanPick)
+        {
+
+        }
+        else
+        {
+
         }
 
         //Debug.Log($">> ¹ë·±½º : {player.ScrollBalance}");
@@ -65,6 +96,29 @@ public class Scroll : MonoBehaviour
             rigidBody.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
             rigidBody.linearVelocity = Vector3.zero;
             rigidBody.AddForce(Vector3.up * dropUpForce + (transform.position - PlayerController.instance.transform.position).normalized * dropSideForce, ForceMode.VelocityChange);
+            restrictPickEndTime = Time.time + restrictPickTime;
+
+            StartCoroutine(Coroutine());
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject.name == "Player") return;
+        if (player.IsHoldingScroll) return;
+
+        particleEndTime = Time.time + particleTime;
+    }
+
+    IEnumerator Coroutine()
+    {
+        while (CanPick == false)
+        {
+            quad.SetActive(false);
+            yield return new WaitForSeconds(0.05f);
+            quad.SetActive(true);
+            yield return new WaitForSeconds(0.05f);
+        }
+        quad.SetActive(true);
     }
 }
