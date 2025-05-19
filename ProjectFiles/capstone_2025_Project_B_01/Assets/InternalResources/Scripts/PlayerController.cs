@@ -224,11 +224,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (isDead) return;
 
-        if (collision.gameObject.name == "ScrollHitBox" && (isHoldingScroll == false))
+        if (collision.gameObject.name == "ScrollHitBox" && (isHoldingScroll == false) && Scroll.CanPick)
         {
             isHoldingScroll = true;
             scrollBalance = 0;

@@ -6,6 +6,7 @@ public class DataSaved
 {
     [SerializeField] public long dateTimeTick;
     [SerializeField] public int imageIndex;
+    [SerializeField] public string sceneName;
     [SerializeField] public Vector3 prevPosition;
     [SerializeField] public bool[] checkpointActived;
 
