@@ -13,6 +13,7 @@ public class Scroll : MonoBehaviour
     [SerializeField] float restrictPickTime;
     float particleEndTime = 0f;
     float restrictPickEndTime = 0f;
+    bool isHolding = true;
 
     ParticleSystem.MinMaxCurve emissionPrevRate;
     // this gameobject component

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveBalanceDefault = 0.1f;
     [SerializeField] float moveBalanceBonus = 0.05f;
     [SerializeField] float scrollSpeed = 1.3f;
+    [SerializeField] float moveBalanceScale = 0.50f;
     bool isHoldingScroll = true;
     bool isDead = false;
     bool isLookingLeft = false;
@@ -78,12 +79,15 @@ public class PlayerController : MonoBehaviour
 
     public void DropScroll()
     {
-        isHoldingScroll = false;
-        scrollBalance = 0;
-        scroll.ChangeHoldingState(false);
-        foreach (Coroutine one in windCoroutines)
+        if (isHoldingScroll == true)
         {
-            StopCoroutine(one);
+            isHoldingScroll = false;
+            scrollBalance = 0;
+            scroll.ChangeHoldingState(false);
+            foreach (Coroutine one in windCoroutines)
+            {
+                StopCoroutine(one);
+            }
         }
     }
 
@@ -147,6 +151,17 @@ public class PlayerController : MonoBehaviour
         if (direction.x > 0.1f) spriteRenderer.flipX = false;
         if (direction.x < -0.1f) spriteRenderer.flipX = true;
 
+        if (direction.x > 0.1f)
+        {
+            scrollBalance *= (scrollBalance < 0) ? (1.0f + moveBalanceBonus * moveBalanceScale) * (1.0f + Time.deltaTime) : (1.0f - moveBalanceBonus * moveBalanceScale) * (1.0f - Time.deltaTime);
+            scrollBalance += -moveBalanceDefault * Time.deltaTime * scrollSpeed / 3;
+        }
+        if (direction.x < -0.1f)
+        {
+            scrollBalance *= (scrollBalance > 0) ? (1.0f + moveBalanceBonus * moveBalanceScale) * (1.0f + Time.deltaTime) : (1.0f - moveBalanceBonus * moveBalanceScale) * (1.0f - Time.deltaTime);
+            scrollBalance += moveBalanceDefault * Time.deltaTime * scrollSpeed / 3;
+        }
+
         animator.SetBool(animatorParameterNameIsMoving, Mathf.Abs(direction.x) > 0.1f);
 
         transform.Translate(direction * speed * Time.deltaTime);
@@ -206,7 +221,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             scrollBalance *= (scrollBalance < 0) ? (1.0f + moveBalanceBonus) * (1.0f + Time.deltaTime) : (1.0f - moveBalanceBonus) * (1.0f - Time.deltaTime);
-            scrollBalance += -moveBalanceDefault * Time.deltaTime;
+            scrollBalance += -moveBalanceDefault * Time.deltaTime * scrollSpeed;
         }
     }
 
