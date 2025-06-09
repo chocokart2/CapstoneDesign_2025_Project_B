@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Cloud : MonoBehaviour
 {
@@ -7,6 +8,12 @@ public class Cloud : MonoBehaviour
     [SerializeField] float minLength;
     [SerializeField] float maxTime;
     [SerializeField] float minTime;
+    [SerializeField] UnityEngine clould1;
+    [SerializeField] Image clould2;
+    [SerializeField] Image clould3;
+    [SerializeField] Image clould4;
+    [SerializeField] Image sr;
+
 
     float length;
     float time;
@@ -38,7 +45,7 @@ public class Cloud : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        sr.sprite = 
     }
 
     // Update is called once per frame
