@@ -22,7 +22,7 @@ public class WindEffect : MonoBehaviour
     {
         IEnumerator mCoroutine(WindEffect component)
         {
-            component.effectLeftWindEmission.rateOverTime = 200;
+            component.effectLeftWindEmission.rateOverTime = 1000;
             yield return new WaitForSeconds(windTime);
             component.effectLeftWindEmission.rateOverTime = 0;
         }
@@ -39,7 +39,7 @@ public class WindEffect : MonoBehaviour
     {
         IEnumerator mCoroutine(WindEffect component)
         {
-            component.effectRightWindEmission.rateOverTime = 200;
+            component.effectRightWindEmission.rateOverTime = 1000;
             yield return new WaitForSeconds(windTime);
             component.effectRightWindEmission.rateOverTime = 0;
         }
