@@ -8,11 +8,11 @@ public class Cloud : MonoBehaviour
     [SerializeField] float minLength;
     [SerializeField] float maxTime;
     [SerializeField] float minTime;
-    [SerializeField] UnityEngine clould1;
-    [SerializeField] Image clould2;
-    [SerializeField] Image clould3;
-    [SerializeField] Image clould4;
-    [SerializeField] Image sr;
+    [SerializeField] Sprite Image1;
+    [SerializeField] Sprite Image2;
+    [SerializeField] Sprite Image3;
+    [SerializeField] Sprite Image4;
+    [SerializeField] SpriteRenderer sr;
 
 
     float length;
@@ -45,7 +45,20 @@ public class Cloud : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        sr.sprite = 
+        switch(Random.Range(0, 4))
+        {
+            case 0: sr.sprite = Image1;
+                break;
+            case 1: 
+                sr.sprite = Image2;
+                break;
+            case 2:
+                sr.sprite = Image3;
+                break;
+            case 3:
+                sr.sprite = Image4;
+                break;
+        }
     }
 
     // Update is called once per frame
