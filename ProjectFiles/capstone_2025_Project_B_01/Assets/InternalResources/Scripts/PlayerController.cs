@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -128,6 +129,7 @@ public class PlayerController : MonoBehaviour
     {
         if (UiManager.instance.HasPaused()) return;
 
+        ReloadMyScene();
         UpdateGroundState();
         Move();
         Jump();
@@ -273,5 +275,12 @@ public class PlayerController : MonoBehaviour
             scrollBalance = 0;
             scroll.ChangeHoldingState(true);
         }
+    }
+
+    private void ReloadMyScene()
+    {
+        if (Input.GetKeyDown(KeyCode.P) == false) return;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
