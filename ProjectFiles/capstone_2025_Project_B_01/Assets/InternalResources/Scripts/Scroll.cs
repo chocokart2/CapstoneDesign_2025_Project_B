@@ -11,6 +11,9 @@ public class Scroll : MonoBehaviour
     [SerializeField] float dropSideForce = 1f;
     [SerializeField] float particleTime;
     [SerializeField] float restrictPickTime;
+    [SerializeField] AudioClip Falling;  // 두루마리가 떨어질 때 재생할 효과음
+    AudioSource audioSource;              // 효과음을 재생할 오디오 소스
+    PlayerSoundManager soundManager; // 효과음 불러오기
     float particleEndTime = 0f;
     float restrictPickEndTime = 0f;
     bool isHolding = true;
@@ -45,6 +48,8 @@ public class Scroll : MonoBehaviour
         player = PlayerController.instance;
         playerPosition = player.transform;
         player.scroll = this;
+
+        soundManager = FindFirstObjectByType<PlayerSoundManager>();
     }
 
     // Update is called once per frame
@@ -106,9 +111,16 @@ public class Scroll : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.gameObject.name == "Player") return;
-        if (player.IsHoldingScroll) return;
 
-        particleEndTime = Time.time + particleTime;
+        if (!player.IsHoldingScroll)
+        {
+            particleEndTime = Time.time + particleTime;
+
+            if (soundManager != null)
+            {
+                soundManager.PlayFalling();
+            }
+        }
     }
 
     IEnumerator Coroutine()
