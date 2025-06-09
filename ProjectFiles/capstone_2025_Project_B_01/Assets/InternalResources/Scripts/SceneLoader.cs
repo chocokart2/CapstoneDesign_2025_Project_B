@@ -5,7 +5,12 @@ public class SceneLoader : MonoBehaviour
 {
     public void SceneMain()
     {
-        SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene("LobbyScene_Final");
+    }
+
+    public void SceneIntro()
+    {
+        SceneManager.LoadScene("IntroScene");
     }
 
     public void SceneLoad()
