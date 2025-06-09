@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
     private MeshRenderer warningRenderer;
     private MeshRenderer quadRenderer;
 
+    private PlayerSoundManager soundManager; // Sound
+
     // related Gameobject Component
     ParticleSystem childParticleSystem;
     ParticleSystem.EmissionModule emission;
@@ -117,6 +119,8 @@ public class PlayerController : MonoBehaviour
         childParticleSystem = particles.GetComponent<ParticleSystem>();
         emission = childParticleSystem.emission;
         emissionPrevRate = emission.rateOverTime;
+
+        soundManager = GetComponent<PlayerSoundManager>(); // Sound
     }
 
     // Update is called once per frame
@@ -130,6 +134,8 @@ public class PlayerController : MonoBehaviour
         Climb();
         BalanceScroll();
         UpdateBalance();
+
+        HandleSound(); // Sound
     }
 
     void UpdateGroundState()
@@ -192,6 +198,24 @@ public class PlayerController : MonoBehaviour
         rigidBody.AddForce(new Vector3(0, jumpForce, 0), ForceMode.VelocityChange);
         nextJumpTime = Time.time + jumpTerm;
         animator.SetTrigger(animatorParameterNamePressJump);
+    }
+
+    // Sound
+    void HandleSound()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isCurrentGround)
+        {
+            soundManager.PlayJump();
+        }
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) && isCurrentGround)
+        {
+            soundManager.PlayWalk();
+        }
+        else
+        {
+            soundManager.StopWalk();
+        }
     }
 
     void Climb()
