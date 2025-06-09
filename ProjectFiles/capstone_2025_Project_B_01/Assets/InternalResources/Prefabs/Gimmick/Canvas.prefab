@@ -651,7 +651,7 @@ PrefabInstance:
       objectReference: {fileID: 1464109675529284786}
     - target: {fileID: 5189333833520939996, guid: 9519452790b1e7749b71375ab5a72d62, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ExitPause
+      value: BackToLobby
       objectReference: {fileID: 0}
     - target: {fileID: 5189333833520939996, guid: 9519452790b1e7749b71375ab5a72d62, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

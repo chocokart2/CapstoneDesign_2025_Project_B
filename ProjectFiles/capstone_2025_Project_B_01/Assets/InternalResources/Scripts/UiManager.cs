@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UiManager : MonoBehaviour
 {
@@ -14,6 +15,13 @@ public class UiManager : MonoBehaviour
     {
         instance.pauseImage.SetActive(false);
         Time.timeScale = 1.0f;
+    }
+
+    static public void BackToLobby()
+    {
+        instance.pauseImage.SetActive(false);
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("LobbyScene_Final");
     }
 
     public bool HasPaused()

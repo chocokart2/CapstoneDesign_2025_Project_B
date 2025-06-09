@@ -1923,7 +1923,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1007755652}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: SceneStage1
+        m_MethodName: SceneIntro
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
