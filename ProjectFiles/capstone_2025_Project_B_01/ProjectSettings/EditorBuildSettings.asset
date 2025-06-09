@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LobbyScene.unity
     guid: 58d90336500fca94ebf2a458706a6645
+  - enabled: 1
+    path: Assets/Scenes/LobbyScene_Final.unity
+    guid: c0a3191f465ac2949bcadc4c1e921b5f
   - enabled: 1
     path: Assets/Scenes/LoadScene.unity
     guid: 0c9dcbb4a653b354f9c24f67bbadd0b7
@@ -20,9 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GeunohTest2.unity
     guid: 6c0d97c9c53caa447a08a7f2e6fff6e6
-  - enabled: 1
-    path: Assets/Scenes/LobbyScene_Final.unity
-    guid: c0a3191f465ac2949bcadc4c1e921b5f
   - enabled: 1
     path: Assets/Scenes/IntroScene.unity
     guid: 1361828d220857a40aea1aef6f7fc3ac
