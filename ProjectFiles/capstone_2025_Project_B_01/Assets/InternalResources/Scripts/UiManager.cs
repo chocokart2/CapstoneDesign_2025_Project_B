@@ -62,7 +62,7 @@ public class UiManager : MonoBehaviour
                 tutorial1Image.SetActive(false);
                 tutorial2Image.SetActive(true);
             }
-            else
+            else if (tutorial2Image.activeInHierarchy)
             {
                 tutorial2Image.SetActive(false);
                 Time.timeScale = 1.0f;
