@@ -28,7 +28,10 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("GameScene2");
     }
 
-    
+    public void EndGame()
+    {
+        Application.Quit();
+    }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
