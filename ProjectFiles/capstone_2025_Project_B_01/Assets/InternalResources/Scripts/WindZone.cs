@@ -44,6 +44,14 @@ public class WindZone : MonoBehaviour
                 Debug.Log($">> 바람 {windForce * direction} 만큼 불었음");
                 // 바람 불게 함
                 PlayerController.instance.ApplyWind(windForce * direction, windTime);
+                if (direction > 0)
+                {
+                    WindEffect.RightWind();
+                }
+                else
+                {
+                    WindEffect.LeftWind();
+                }
             }
         }
     }
