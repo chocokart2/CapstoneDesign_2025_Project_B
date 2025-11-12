@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Scroll : MonoBehaviour
@@ -58,6 +59,15 @@ public class Scroll : MonoBehaviour
         if (player.IsHoldingScroll == false && transform.position.y < -100)
         {
             transform.position = player.transform.position + new Vector3(0, 3, 0);
+            rigidBody.linearVelocity = Vector3.zero;
+            rigidBody.angularVelocity = Vector3.zero;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.position = player.transform.position + new Vector3(0, 3, 0);
+            rigidBody.linearVelocity = Vector3.zero;
+            rigidBody.angularVelocity = Vector3.zero;
         }
 
 

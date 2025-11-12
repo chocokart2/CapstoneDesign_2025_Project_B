@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rigidBody;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    StopSkill skill;
 
     // related Gameobject
     public Scroll scroll;
@@ -122,6 +123,7 @@ public class PlayerController : MonoBehaviour
         emissionPrevRate = emission.rateOverTime;
 
         soundManager = GetComponent<PlayerSoundManager>(); // Sound
+        skill = GetComponent<StopSkill>();
     }
 
     // Update is called once per frame
@@ -158,16 +160,19 @@ public class PlayerController : MonoBehaviour
         
         if (direction.x > 0.1f) spriteRenderer.flipX = false;
         if (direction.x < -0.1f) spriteRenderer.flipX = true;
-
-        if (direction.x > 0.1f)
+        
+        if (skill.IsPressed == false)
         {
-            scrollBalance *= (scrollBalance < 0) ? (1.0f + moveBalanceBonus * moveBalanceScale) * (1.0f + Time.deltaTime) : (1.0f - moveBalanceBonus * moveBalanceScale) * (1.0f - Time.deltaTime);
-            scrollBalance += -moveBalanceDefault * Time.deltaTime * scrollSpeed / 3;
-        }
-        if (direction.x < -0.1f)
-        {
-            scrollBalance *= (scrollBalance > 0) ? (1.0f + moveBalanceBonus * moveBalanceScale) * (1.0f + Time.deltaTime) : (1.0f - moveBalanceBonus * moveBalanceScale) * (1.0f - Time.deltaTime);
-            scrollBalance += moveBalanceDefault * Time.deltaTime * scrollSpeed / 3;
+            if (direction.x > 0.1f)
+            {
+                scrollBalance *= (scrollBalance < 0) ? (1.0f + moveBalanceBonus * moveBalanceScale) * (1.0f + Time.deltaTime) : (1.0f - moveBalanceBonus * moveBalanceScale) * (1.0f - Time.deltaTime);
+                scrollBalance += -moveBalanceDefault * Time.deltaTime * scrollSpeed / 3;
+            }
+            if (direction.x < -0.1f)
+            {
+                scrollBalance *= (scrollBalance > 0) ? (1.0f + moveBalanceBonus * moveBalanceScale) * (1.0f + Time.deltaTime) : (1.0f - moveBalanceBonus * moveBalanceScale) * (1.0f - Time.deltaTime);
+                scrollBalance += moveBalanceDefault * Time.deltaTime * scrollSpeed / 3;
+            }
         }
 
         animator.SetBool(animatorParameterNameIsMoving, Mathf.Abs(direction.x) > 0.1f);
@@ -238,6 +243,11 @@ public class PlayerController : MonoBehaviour
     {
         if (isHoldingScroll == false) return;
 
+        if (skill.IsPressed)
+        {
+            return;
+        }
+
         if (Input.GetKey(KeyCode.RightArrow))
         {
             scrollBalance *= (scrollBalance > 0) ? (1.0f + moveBalanceBonus) * (1.0f + Time.deltaTime) : (1.0f - moveBalanceBonus) * (1.0f - Time.deltaTime);
@@ -253,6 +263,10 @@ public class PlayerController : MonoBehaviour
 
     void UpdateBalance()
     {
+        if (skill.IsPressed)
+        {
+            return;
+        }
         float delta = staticAmplyfyBalance * Time.deltaTime * scrollBalance * scrollSpeed;
         scrollBalance += delta;
 
