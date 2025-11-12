@@ -13,7 +13,7 @@ public class FinishZone : MonoBehaviour
         IEnumerator Coroutine()
         {
             yield return new WaitForSeconds(1);
-            SceneManager.LoadScene("GeunohTest2");
+            SceneManager.LoadScene("Level2Final");
         }
 
         StartCoroutine(Coroutine());
