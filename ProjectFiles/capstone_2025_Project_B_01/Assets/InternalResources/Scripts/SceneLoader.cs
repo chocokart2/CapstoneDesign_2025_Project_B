@@ -20,12 +20,17 @@ public class SceneLoader : MonoBehaviour
 
     public void SceneStage1()
     {
-        SceneManager.LoadScene("GeunohTest1");
+        SceneManager.LoadScene("Level1Final");
     }
 
     public void SceneStage2()
     {
-        SceneManager.LoadScene("GameScene2");
+        SceneManager.LoadScene("Level2Final");
+    }
+
+    public void SceneEnd()
+    {
+        SceneManager.LoadScene("FinishFinal");
     }
 
     public void EndGame()
