@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class FinishZone : MonoBehaviour
 {
+    public string scene;
+
     private void OnTriggerEnter(Collider other)
     {
         if (PlayerController.IsPlayer(other) == false) return;
@@ -13,7 +15,7 @@ public class FinishZone : MonoBehaviour
         IEnumerator Coroutine()
         {
             yield return new WaitForSeconds(1);
-            SceneManager.LoadScene("Level2Final");
+            SceneManager.LoadScene(scene);
         }
 
         StartCoroutine(Coroutine());

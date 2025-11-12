@@ -13022,7 +13022,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b6597fa28304a26489441d2aa6d3a7ab, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: b6597fa28304a26489441d2aa6d3a7ab, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.2
@@ -15887,7 +15887,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6e3e16337d84c184f9f180b8fd7790b5, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 6e3e16337d84c184f9f180b8fd7790b5, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -15984,7 +15984,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 52c39083320b8804485008f2d4010750, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 52c39083320b8804485008f2d4010750, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -16099,7 +16099,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9ca6bdf3fa0070e499038c0fc45d963e, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 9ca6bdf3fa0070e499038c0fc45d963e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -25427,6 +25427,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4098496603144714354, guid: f770919c6b59d514099f48a9f553c986, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098496603144714354, guid: f770919c6b59d514099f48a9f553c986, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6183388938560340281, guid: f770919c6b59d514099f48a9f553c986, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -27269,6 +27277,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6412475825006242396, guid: 1b2c8dae70dbf4946b28af9843a78b6a, type: 3}
+      propertyPath: scene
+      value: FinishFinal
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28775,7 +28787,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9ca6bdf3fa0070e499038c0fc45d963e, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 9ca6bdf3fa0070e499038c0fc45d963e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
