@@ -52,7 +52,7 @@ public class StopSkill : MonoBehaviour
             textDown.color = Color.black;
         }
 
-        slider.value = 0.2f + (time / maxTime) * 0.8f;
+        slider.value = 0.05f + (time / maxTime) * 0.95f;
 
         if (time > maxTime)
         {

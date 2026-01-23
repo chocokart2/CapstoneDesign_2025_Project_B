@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Mathematics;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,8 +25,11 @@ public class PlayerController : MonoBehaviour
     float jumpTerm = 0.5f;
     float nextJumpTime;
     float staticAmplyfyBalance = 0.2f;
-    public float ScrollBalance { get => scrollBalance; }
-    float scrollBalance = 0.0f;
+    /// <summary>
+    ///     플레이어가 들고 있는 두루마리의 밸런스 값입니다. -1.0f ~ 1.0f 사이의 값을 가집니다.
+    /// </summary>
+    public double ScrollBalance { get => scrollBalance; }
+    double scrollBalance = 0.0f;
     string animatorParameterNameOnGround = "OnGround";
     string animatorParameterNameIsMoving = "IsMoving";
     string animatorParameterNamePressJump = "PressJump";
@@ -52,7 +56,7 @@ public class PlayerController : MonoBehaviour
     ParticleSystem childParticleSystem;
     ParticleSystem.EmissionModule emission;
 
-    public static bool IsPlayer(Collider other) => other.gameObject.name == "Player";
+    public static bool IsPlayer(Collider other) => other.gameObject.name == "Player" || other.gameObject.name == "Player (1)";
 
     public void ApplyWind(float wind, float time)
     {
@@ -267,11 +271,11 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        float delta = staticAmplyfyBalance * Time.deltaTime * scrollBalance * scrollSpeed;
+        double delta = staticAmplyfyBalance * Time.deltaTime * scrollBalance * scrollSpeed;
         scrollBalance += delta;
 
         // Debug.Log($"변화량 : {delta} \n결과 : {scrollBalance}");
-        Warning.SetActive(Mathf.Abs(scrollBalance) > 0.5f && Mathf.Abs(scrollBalance) < 1f);
+        Warning.SetActive(System.Math.Abs(scrollBalance) > 0.5f && System.Math.Abs(scrollBalance) < 1f);
         // 만약 너무 벗어나면 아웃
         if (scrollBalance > 1 || scrollBalance < -1)
         {

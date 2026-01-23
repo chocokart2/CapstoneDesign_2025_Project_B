@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6474739084176403985}
   - component: {fileID: 4832132611211983699}
   - component: {fileID: 1778289258023725322}
+  - component: {fileID: 313500416964531575}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -158,10 +159,30 @@ MonoBehaviour:
   moveBalanceDefault: 0.1
   moveBalanceBonus: 0.05
   scrollSpeed: 1.3
+  moveBalanceScale: 0.5
   scroll: {fileID: 0}
   Warning: {fileID: 4689625423479437862}
   quad: {fileID: 3902633764539171150}
   particles: {fileID: 4648597684890738943}
+--- !u!114 &313500416964531575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668272245909309797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303c9265828681b4580ce1b56cc39c67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsPressed: 0
+  time: 0
+  maxTime: 10
+  image: {fileID: 0}
+  slider: {fileID: 0}
+  textUp: {fileID: 0}
+  textDown: {fileID: 0}
 --- !u!1 &3902633764539171150
 GameObject:
   m_ObjectHideFlags: 0

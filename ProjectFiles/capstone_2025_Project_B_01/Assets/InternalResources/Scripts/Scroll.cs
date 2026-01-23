@@ -7,7 +7,7 @@ public class Scroll : MonoBehaviour
     static public Scroll instance;
     static public bool CanPick => Time.time > instance.restrictPickEndTime;
 
-    [SerializeField] float angleDivide = 4.0f;
+    [SerializeField] float angleDivide = 4.0f; // 플레이어의 스크롤 밸런스를 어떤 각도로 보여줄지에 대한 값입니다.
     [SerializeField] float dropUpForce = 3f;
     [SerializeField] float dropSideForce = 1f;
     [SerializeField] float particleTime;
@@ -73,7 +73,7 @@ public class Scroll : MonoBehaviour
 
         if (player.IsHoldingScroll)
         {
-            float angle = player.ScrollBalance * Mathf.PI / angleDivide;
+            float angle = (float)player.ScrollBalance * Mathf.PI / angleDivide;
 
             float posX = Mathf.Sin(angle);
             float posY = Mathf.Cos(angle);
@@ -124,10 +124,11 @@ public class Scroll : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.collider.gameObject.name == "Player") return;
 
+        if (collision.impulse.magnitude < 0.01f) return;
         if (!player.IsHoldingScroll)
         {
             particleEndTime = Time.time + particleTime;
